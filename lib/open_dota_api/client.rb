@@ -5,6 +5,8 @@ require 'open_dota_api/match'
 require 'open_dota_api/hero'
 require 'open_dota_api/pro_player'
 require 'open_dota_api/explorer'
+require 'open_dota_api/teams/player'
+require 'open_dota_api/teams/match'
 
 module OpenDotaApi
   class Client
@@ -44,6 +46,22 @@ module OpenDotaApi
       explorer_data = request(Explorer::ENDPOINT, query_params: Explorer.query_params(league_id))
       return {} unless explorer_data.success?
       Explorer.new(explorer_data)
+    end
+
+    def team_players(team)
+      return {} if team.blank?
+
+      players_data = request(team.players_endpoint)
+      return {} unless players_data
+      Teams::Player.instantiate(players_data)
+    end
+
+    def team_matches(team)
+      return {} if team.blank?
+
+      matches_data = request(team.matches_endpoint)
+      return {} unless matches_data
+      Teams::Match.instantiate(matches_data)
     end
 
     private
