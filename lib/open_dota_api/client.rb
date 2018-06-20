@@ -48,6 +48,14 @@ module OpenDotaApi
       Explorer.new(explorer_data)
     end
 
+    def team(team_id)
+      return {} if team_id.blank?
+
+      team_data = request(Team.show_endpoint(team_id))
+      return {} unless team_data
+      Team.new(team_data)
+    end
+
     def team_players(team)
       return {} if team.blank?
 

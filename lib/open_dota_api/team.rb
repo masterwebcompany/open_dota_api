@@ -24,6 +24,10 @@ module OpenDotaApi
       "#{ENDPOINT}/#{data['team_id']}/#{MATCHES_ENDPOINT}"
     end
 
+    def self.show_endpoint(team_id)
+      "#{ENDPOINT}/#{team_id}"
+    end
+
     private
       def client
         @client ||= Client.new
