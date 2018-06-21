@@ -7,6 +7,7 @@ require 'open_dota_api/pro_player'
 require 'open_dota_api/explorer'
 require 'open_dota_api/teams/player'
 require 'open_dota_api/teams/match'
+require 'open_dota_api/player'
 
 module OpenDotaApi
   class Client
@@ -54,6 +55,14 @@ module OpenDotaApi
       team_data = request(Team.show_endpoint(team_id))
       return {} unless team_data
       Team.new(team_data)
+    end
+
+    def player(player_id)
+      return {} if player_id.blank?
+
+      player_data = request(Player.show_endpoint(player_id))
+      return {} unless player_data
+      Player.new(player_data)
     end
 
     def team_players(team)
