@@ -25,12 +25,6 @@ module OpenDotaApi
       Team.instantiate(teams_data)
     end
 
-    def matches(match_id = nil)
-      match_data = request(Match::ENDPOINT, match_id)
-      return {} unless match_data.success?
-      Match.new(match_data)
-    end
-
     def heroes
       heroes_data = request(Hero::ENDPOINT)
       return {} unless heroes_data.success?
@@ -49,16 +43,24 @@ module OpenDotaApi
       Explorer.new(explorer_data)
     end
 
-    def team(team_id)
-      return {} if team_id.blank?
+    def match_by_id(match_id)
+      return unless match_id
+
+      match_data = request(Match::ENDPOINT, match_id)
+      return {} unless match_data.success?
+      Match.new(match_data)
+    end
+
+    def team_by_id(team_id)
+      return {} unless team_id
 
       team_data = request(Team.show_endpoint(team_id))
       return {} unless team_data
       Team.new(team_data)
     end
 
-    def player(player_id)
-      return {} if player_id.blank?
+    def player_by_id(player_id)
+      return {} unless player_id
 
       player_data = request(Player.show_endpoint(player_id))
       return {} unless player_data
@@ -66,7 +68,7 @@ module OpenDotaApi
     end
 
     def team_players(team)
-      return {} if team.blank?
+      return {} unless team
 
       players_data = request(team.players_endpoint)
       return {} unless players_data
@@ -74,7 +76,7 @@ module OpenDotaApi
     end
 
     def team_matches(team)
-      return {} if team.blank?
+      return {} unless team
 
       matches_data = request(team.matches_endpoint)
       return {} unless matches_data

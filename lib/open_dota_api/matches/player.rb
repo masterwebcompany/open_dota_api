@@ -23,6 +23,10 @@ module OpenDotaApi
         data['camps_stacked']
       end
 
+      def creeps_stacked
+        data['creeps_stacked']
+      end
+
       def deaths
         data['deaths']
       end
@@ -101,6 +105,46 @@ module OpenDotaApi
 
       def teamfight_participation
         data['teamfight_participation']
+      end
+
+      def level
+        data['level']
+      end
+
+      def kills_per_min
+        data['kills_per_min']
+      end
+
+      def tower_damage
+        data['tower_damage']
+      end
+
+      def towers_killed
+        data['towers_killed']
+      end
+
+      def total_gold
+        data['total_gold']
+      end
+
+      def total_xp
+        data['total_xp']
+      end
+
+      def courier_kills
+        data['courier_kills']
+      end
+
+      def lane_efficiency
+        data['lane_efficiency']
+      end
+
+      def lane_role
+        data['lane_role']
+      end
+
+      def lane
+        data['lane']
       end
     end
   end

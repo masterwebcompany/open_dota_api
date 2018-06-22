@@ -2,7 +2,7 @@
 
 ###
 
-:gem: Unofficial Ruby Gem for [OpenDotaAPI](https://docs.opendota.com/). This API provides Dota 2 related data. 
+:gem: Unofficial Ruby Gem for [OpenDotaAPI](https://docs.opendota.com/). This API provides Dota 2 related data.
 
 ###
 [![Gem Version](https://badge.fury.io/rb/open_dota_api.svg)](https://badge.fury.io/rb/open_dota_api)
@@ -23,7 +23,7 @@ gem install open_dota_api
 ```
 
 or add this line to your application's Gemfile:
-   
+
 ```ruby
 gem 'open_dota_api'
 ```
@@ -43,6 +43,18 @@ require 'open_dota_api'
 
 ```
 
+Api key configuration:
+
+```ruby
+
+# config/initializers/open_dota_api.rb
+
+OpenDotaApi.configure do |c|
+  #c.api_key = 'your-api-key'
+end
+
+```
+
 Use available methods to gather needed data:
 
 ```ruby
@@ -53,7 +65,13 @@ OpenDotaApi.leagues
 OpenDotaApi.teams
 
 # Match details
-OpenDotaApi.matches(match_id)
+OpenDotaApi.match_by_id(match_id)
+
+# Team details
+OpenDotaApi.team_by_id(team_id)
+
+# Player details
+OpenDotaApi.player_by_id(player_id)
 
 # Heroes listing
 OpenDotaApi.heroes
@@ -150,7 +168,7 @@ match.players               # array of players (type OpenDotaApi::Matches::Playe
 ##### :small_blue_diamond: Player
 
 ```ruby
-players = match.players 
+players = match.players
 player = players.first
 player.class                # OpenDotaApi::Matches::Player
 ```
@@ -259,7 +277,7 @@ explorer.class                  # OpenDotaApi::Explorer
 ```
 
 ```ruby
-explorer.league_matches_ids     # Array of matches IDs for current league 
+explorer.league_matches_ids     # Array of matches IDs for current league
 ```
 ...
 
@@ -269,8 +287,8 @@ That's all for now.
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/vergilet/open_dota_api
 
-<img align="right" src="https://user-images.githubusercontent.com/2478436/28493917-7c3389c8-6f28-11e7-932e-da360b68f3d3.gif"/> 
-    
+<img align="right" src="https://user-images.githubusercontent.com/2478436/28493917-7c3389c8-6f28-11e7-932e-da360b68f3d3.gif"/>
+
 Feel free to contribute:
 1. Fork it (https://github.com/vergilet/open_dota_api/fork)
 2. Create your feature branch (git checkout -b my-new-feature)
