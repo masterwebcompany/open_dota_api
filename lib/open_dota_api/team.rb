@@ -9,19 +9,19 @@ module OpenDotaApi
     define_adder(%w[team_id rating wins losses last_match_time name tag])
 
     def players
-      client.team_players(self)
+        client.players_by_team_id(self.team_id)
     end
 
     def matches
-      client.team_matches(self)
+      client.matches_by_team_id(self.team_id)
     end
 
-    def players_endpoint
-      "#{ENDPOINT}/#{data['team_id']}/#{PLAYERS_ENDPOINT}"
+    def self.players_endpoint(team_id)
+      "#{ENDPOINT}/#{team_id}/#{PLAYERS_ENDPOINT}"
     end
 
-    def matches_endpoint
-      "#{ENDPOINT}/#{data['team_id']}/#{MATCHES_ENDPOINT}"
+    def self.matches_endpoint(team_id)
+      "#{ENDPOINT}/#{team_id}/#{MATCHES_ENDPOINT}"
     end
 
     def self.show_endpoint(team_id)

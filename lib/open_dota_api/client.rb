@@ -67,18 +67,18 @@ module OpenDotaApi
       Player.new(player_data)
     end
 
-    def team_players(team)
-      return {} unless team
+    def players_by_team_id(team_id)
+      return {} unless team_id
 
-      players_data = request(team.players_endpoint)
+      players_data = request(Team.players_endpoint(team_id))
       return {} unless players_data
       Teams::Player.instantiate(players_data)
     end
 
-    def team_matches(team)
-      return {} unless team
+    def matches_by_team_id(team_id)
+      return {} unless team_id
 
-      matches_data = request(team.matches_endpoint)
+      matches_data = request(Team.matches_endpoint(team_id))
       return {} unless matches_data
       Teams::Match.instantiate(matches_data)
     end
