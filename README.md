@@ -70,6 +70,12 @@ OpenDotaApi.match_by_id(match_id)
 # Team details
 OpenDotaApi.team_by_id(team_id)
 
+# Team players
+OpenDotaAPI.players_by_team_id(team_id)
+
+#Team matches
+OpenDotaAPI.matches_by_team_id(team_id)
+
 # Player details
 OpenDotaApi.player_by_id(player_id)
 
@@ -96,11 +102,11 @@ leagues                # array
 ```
 ```ruby
 league = leagues.first
-league.class           # OpenDotaApi::Leagues
-
+league.class           # OpenDotaApi::League
 ```
+
 ```ruby
-league.league_id       # Number, league ID
+league.league_id       # Integer, league ID
 league.ticket          # String, ticket identifier
 league.banner          # String, banner identifier
 league.tier            # String, premiere, pro, amateur
@@ -122,13 +128,42 @@ team.class             # OpenDotaApi::Team
 ```
 
 ```ruby
-team.team_id
-team.rating
-team.wins
-team.losses
-team.last_match_time
-team.name
-team.tag
+team.team_id           # Integer, team ID
+team.rating            # Number, the Elo rating of the team
+team.wins              # Integer, the number of games won by this team
+team.losses            # Integer, the number of losses by this team
+team.last_match_time   # Integer, the Unix timestamp of the last match played by this team
+team.name              # String, team name, eg. 'Virtus Pro'
+team.tag               # String, team tag/abbreviation, eg. 'VP'
+team.logo_url          # String, team  logo url
+```
+
+```ruby
+team.matches                    # array
+team_match = team.matches.first
+team_match.class                # OpenDotaApi::Teams::Match
+team_match.league_id            # Integer, league ID
+team_match.match_id             # Integer, match ID
+team_match.radiant_win          # Boolean, whether or not the Radiant won the match
+team_match.radiant              # Boolean, whether the match was on Radiant
+team_match.duration             # Integer, length of the match
+team_match.start_time           # Integer, Unix timestamp of when the match began
+team_match.cluster              # Integer, cluster
+team_match.opposing_team_id     # Integer, opposing team ID
+team_match.opposing_team_name   # String, opposing team name
+team_match.opposing_team_logo   # String, opposing team logo url
+team_match.league_name          # String, name of league the match took place in
+```
+
+```ruby
+team.players                        # array
+team_player = team.players.first
+team_player.class                   # OpenDotaApi::Teams::Player
+team_player.account_id              # Integer, the player account ID
+team_player.name                    # String, the player name
+team_player.games_played            # Integer, number of games played
+team_player.wins                    # Integer, number of wins
+team_player.is_current_team_member  # Boolean, if this player is on the current roster
 ```
 
 #### :large_blue_diamond: Matches
@@ -137,33 +172,33 @@ team.tag
 
 
 ```ruby
-match_id = 0000000001        # number, is required
+match_id = 0000000001        # Integer, match ID, is required
 ```
 
 ```ruby
-match = OpenDotaApi.matches(match_id)
+match = OpenDotaApi.match_by_id(match_id)
 match.class                  # OpenDotaApi::Match
 ```
 
 ```ruby
-match.match_id
-match.start_time
-match.duration
-match.series_id
-match.series_type
-match.radiant_team_id
-match.dire_team_id
-match.match_seq_num
-match.league_id
-match.first_blood_time
-match.winner
-match.cluster
-match.replay_salt
-match.cluster
-match.replay_url
-match.radiant_score         # Integer
-match.dire_score            # Integer
+match.match_id              # Integer, the ID number of the match assigned by Valve
+match.start_time            # Integer, the Unix timestamp at which the game started
+match.duration              # Integer, duration of the game in seconds
+match.series_id             # Integer, series ID
+match.series_type           # Integer, series type
+match.radiant_team_id       # Integer, the Radiant's team_id
+match.dire_team_id          # Integer, the Dire's team_id
+match.match_seq_num         # Integer, match seq num
+match.league_id             # Integer, league ID
+match.first_blood_time      # Integer, time in seconds at which first blood occurred
+match.winner                # Symbol, either :radiant or :dire
+match.replay_salt           # Integer, replay salt
+match.cluster               # Integer, cluster
+match.replay_url            # String, replay url
+match.radiant_score         # Integer, final score for Radiant (number of kills on Radiant)
+match.dire_score            # Integer, inal score for Dire (number of kills on Radiant)
 match.players               # array of players (type OpenDotaApi::Matches::Player)
+
 ```
 ##### :small_blue_diamond: Player
 
@@ -174,31 +209,31 @@ player.class                # OpenDotaApi::Matches::Player
 ```
 
 ```ruby
-player.match_id             # related to OpenDotaApi::Match
-player.player_slot
-player.account_id
-player.assists
-player.camps_stacked
-player.deaths
-player.denies
-player.gold_per_min
-player.hero_id              # related to OpenDotaApi::Hero
-player.kills
-player.obs_placed
-player.sen_placed
-player.rune_pickups
-player.stuns
-player.xp_per_min
-player.name
-player.side
-player.kda
-player.tower_kills
-player.roshan_kills
-player.hero_healing
-player.last_hits
-player.firstblood_claimed
-player.hero_damage
-player.teamfight_participation
+player.match_id                 # Integer, related to OpenDotaApi::Match
+player.player_slot              # Integer, which slot the player is in. 0-127 are Radiant, 128-255 are Dire
+player.account_id               # Integer, account ID
+player.assists                  # Integer, number of assists the player had
+player.camps_stacked            # Integer, number of camps stacked
+player.deaths                   # Integer, number of deaths
+player.denies                   # Integer, number of denies
+player.gold_per_min             # Integer, Gold Per Minute obtained by this player
+player.hero_id                  # Integer, related to OpenDotaApi::Hero
+player.kills                    # Integer, number of kills
+player.obs_placed               # Integer, total number of observer wards placed
+player.sen_placed               # Integer, how many sentries were placed by the player
+player.rune_pickups             # Integer, number of runes picked up
+player.stuns                    # Number, total stun duration of all stuns by the player
+player.xp_per_min               # Integer, Experience Per Minute obtained by the player
+player.name                     # String, name
+player.side                     # Symbol, either :radiant or :dire
+player.kda                      # Integer, KDA
+player.tower_kills              # Integer, total number of tower kills the player had
+player.roshan_kills             # Integer, total number of roshan kills (last hit on roshan) the player had
+player.hero_healing             # Integer, Hero Healing Done
+player.last_hits                # Integer, Number of last hits
+player.firstblood_claimed       # Integer, first blood claimed
+player.hero_damage              # Integer, Hero Damage Dealt
+player.teamfight_participation  # Number, teamfight participation
 ```
 
 #### :large_blue_diamond: Heroes
@@ -208,21 +243,21 @@ player.teamfight_participation
 
 ```ruby
 heroes = OpenDotaApi.heroes
-heroes.class              # array        
+heroes.class              # array
 ```
 
 ```ruby
 hero = heroes.first
-hero.class                # OpenDotaApi::Hero    
+hero.class                # OpenDotaApi::Hero
 ```
 ```ruby
-hero.id
-hero.name
-hero.localized_name       # "Anti-mage"
-hero.primary_attr
-hero.attack_type
-hero.roles                # array of roles
-hero.legs
+hero.id                   # Integer, numeric identifier for the hero object
+hero.name                 # String, dota hero command name, e.g. 'npc_dota_hero_antimage'
+hero.localized_name       # String, hero name, e.g. 'Anti-Mage'
+hero.primary_attr         # String, hero primary shorthand attribute name, e.g. 'agi'
+hero.attack_type          # String, hero attack type, either 'Melee' or 'Ranged'
+hero.legs                 # Integer, number of legs of the hero
+hero.roles                # Array, hero's role in the game
 ```
 
 #### :large_blue_diamond: Pro Players
@@ -232,37 +267,37 @@ hero.legs
 
 ```ruby
 pro_players = OpenDotaApi.pro_players
-pro_players.class              # array        
+pro_players.class              # array
 ```
 
 ```ruby
 pro_player = pro_players.first
-pro_player.class               # OpenDotaApi::ProPlayer    
+pro_player.class               # OpenDotaApi::ProPlayer
 ```
 
 ```ruby
-pro_player.account_id
-pro_player.steam_id
-pro_player.avatar
-pro_player.avatar_medium
-pro_player.avatar_full
-pro_player.profile_url
-pro_player.persona_name
-pro_player.last_login
-pro_player.full_history_time
-pro_player.cheese
-pro_player.fh_unavailable
-pro_player.loc_country_code
-pro_player.last_match_time
-pro_player.name
-pro_player.country_code
-pro_player.fantasy_role
-pro_player.team_id
-pro_player.team_name
-pro_player.team_tag
-pro_player.is_locked
-pro_player.is_pro
-pro_player.locked_until
+pro_player.account_id          # Integer, Player's account identifier
+pro_player.steam_id            # String, Player's steam identifier
+pro_player.avatar              # String, Steam picture URL (small picture)
+pro_player.avatar_medium       # String, Steam picture URL (medium picture)
+pro_player.avatar_full         # String, Steam picture URL (full picture)
+pro_player.profile_url         # String, Steam profile URL
+pro_player.persona_name        # String, Player's Steam name
+pro_player.last_login          # Time, Date and time of last login to OpenDota
+pro_player.full_history_time   # Time, Date and time of last request to refresh player's match history
+pro_player.cheese              # Integer, Amount of dollars the player has donated to OpenDota
+pro_player.fh_unavailable      # Boolean, Whether the refresh of player' match history failed
+pro_player.loc_country_code    # String, Player's country identifier, e.g. US
+pro_player.last_match_time     # Time, last match time
+pro_player.name                # String, Verified player name, e.g. 'Miracle-'
+pro_player.country_code        # String, Player's country code
+pro_player.fantasy_role        # Integer, Player's ingame role (core: 1 or support: 2)
+pro_player.team_id             # Integer, Player's team ID
+pro_player.team_name           # String, Player's team name, e.g. 'Evil Geniuses'
+pro_player.team_tag            # String, Player's team shorthand tag, e.g. 'EG'
+pro_player.is_locked           # Boolean, Whether the roster lock is active
+pro_player.is_pro              # Boolean, Whether the player is professional or not
+pro_player.locked_until        # Integer, When the roster lock will end
 ```
 
 
@@ -273,7 +308,7 @@ pro_player.locked_until
 
 ```ruby
 explorer = OpenDotaApi.explorer(league_id)
-explorer.class                  # OpenDotaApi::Explorer       
+explorer.class                  # OpenDotaApi::Explorer
 ```
 
 ```ruby
