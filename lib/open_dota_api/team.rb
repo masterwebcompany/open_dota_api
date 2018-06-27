@@ -6,7 +6,7 @@ module OpenDotaApi
     PLAYERS_ENDPOINT = 'players'.freeze
     MATCHES_ENDPOINT = 'matches'.freeze
 
-    define_adder(%w[team_id rating wins losses last_match_time name tag])
+    define_adder(%w[team_id rating wins losses last_match_time name tag logo_url])
 
     def players
         client.players_by_team_id(self.team_id)
