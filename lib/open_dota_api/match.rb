@@ -95,6 +95,14 @@ module OpenDotaApi
       data['dire_score']
     end
 
+    def radiant_gold_advantage
+      data['radiant_gold_adv']
+    end
+
+    def radiant_xp_advantage
+      data['radiant_xp_adv']
+    end
+
     def players
       data['players'] ? Player.instantiate(data['players']) : []
     end

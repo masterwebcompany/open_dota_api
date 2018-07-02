@@ -181,23 +181,25 @@ match.class                  # OpenDotaApi::Match
 ```
 
 ```ruby
-match.match_id              # Integer, the ID number of the match assigned by Valve
-match.start_time            # Integer, the Unix timestamp at which the game started
-match.duration              # Integer, duration of the game in seconds
-match.series_id             # Integer, series ID
-match.series_type           # Integer, series type
-match.radiant_team_id       # Integer, the Radiant's team_id
-match.dire_team_id          # Integer, the Dire's team_id
-match.match_seq_num         # Integer, match seq num
-match.league_id             # Integer, league ID
-match.first_blood_time      # Integer, time in seconds at which first blood occurred
-match.winner                # Symbol, either :radiant or :dire
-match.replay_salt           # Integer, replay salt
-match.cluster               # Integer, cluster
-match.replay_url            # String, replay url
-match.radiant_score         # Integer, final score for Radiant (number of kills on Radiant)
-match.dire_score            # Integer, inal score for Dire (number of kills on Radiant)
-match.players               # array of players (type OpenDotaApi::Matches::Player)
+match.match_id                # Integer, the ID number of the match assigned by Valve
+match.start_time              # Integer, the Unix timestamp at which the game started
+match.duration                # Integer, duration of the game in seconds
+match.series_id               # Integer, series ID
+match.series_type             # Integer, series type
+match.radiant_team_id         # Integer, the Radiant's team_id
+match.dire_team_id            # Integer, the Dire's team_id
+match.match_seq_num           # Integer, match seq num
+match.league_id               # Integer, league ID
+match.first_blood_time        # Integer, time in seconds at which first blood occurred
+match.winner                  # Symbol, either :radiant or :dire
+match.replay_salt             # Integer, replay salt
+match.cluster                 # Integer, cluster
+match.replay_url              # String, replay URL
+match.radiant_score           # Integer, final score for Radiant (number of kills on Radiant)
+match.dire_score              # Integer, final score for Dire (number of kills on Radiant)
+match.radiant_gold_advantage  # Array, Radiant gold advantage at each minute in the game. A negative number means that Radiant is behind.
+match.radiant_xp_advantage    # Array, Radiant experience advantage at each minute in the game. A negative number means that Radiant is behind.
+match.players                 # array of players (type OpenDotaApi::Matches::Player)
 
 ```
 ##### :small_blue_diamond: Player
@@ -234,6 +236,16 @@ player.last_hits                # Integer, Number of last hits
 player.firstblood_claimed       # Integer, first blood claimed
 player.hero_damage              # Integer, Hero Damage Dealt
 player.teamfight_participation  # Number, teamfight participation
+player.backpack_0               # Integer, Item in backpack slot 0
+player.backpack_1               # Integer, Item in backpack slot 1
+player.backpack_2               # Integer, Item in backpack slot 2
+player.item_0                   # Integer, Item in the player's first slot
+player.item_1                   # Integer, Item in the player's second slot
+player.item_2                   # Integer, Item in the player's third slot
+player.item_3                   # Integer, Item in the player's fourth slot
+player.item_4                   # Integer, Item in the player's fifth slot
+player.item_5                   # Integer, Item in the player's sixth slot
+
 ```
 
 #### :large_blue_diamond: Heroes

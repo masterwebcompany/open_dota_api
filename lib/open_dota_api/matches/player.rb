@@ -146,6 +146,43 @@ module OpenDotaApi
       def lane
         data['lane']
       end
+
+      def backpack_0
+        data['backpack_0']
+      end
+
+      def backpack_1
+        data['backpack_1']
+      end
+
+      def backpack_2
+        data['backpack_2']
+      end
+
+      def item_0
+        data['item_0']
+      end
+
+      def item_1
+        data['item_1']
+      end
+
+      def item_2
+        data['item_2']
+      end
+
+      def item_3
+        data['item_3']
+      end
+
+      def item_4
+        data['item_4']
+      end
+
+      def item_5
+        data['item_5']
+      end
+
     end
   end
 end
