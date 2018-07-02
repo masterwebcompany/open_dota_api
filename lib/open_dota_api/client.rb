@@ -5,6 +5,9 @@ require 'open_dota_api/match'
 require 'open_dota_api/hero'
 require 'open_dota_api/pro_player'
 require 'open_dota_api/explorer'
+require 'open_dota_api/teams/player'
+require 'open_dota_api/teams/match'
+require 'open_dota_api/player'
 
 module OpenDotaApi
   class Client
@@ -20,12 +23,6 @@ module OpenDotaApi
       teams_data = request(Team::ENDPOINT)
       return {} unless teams_data.success?
       Team.instantiate(teams_data)
-    end
-
-    def matches(match_id = nil)
-      match_data = request(Match::ENDPOINT, match_id)
-      return {} unless match_data.success?
-      Match.new(match_data)
     end
 
     def heroes
@@ -44,6 +41,46 @@ module OpenDotaApi
       explorer_data = request(Explorer::ENDPOINT, query_params: Explorer.query_params(league_id))
       return {} unless explorer_data.success?
       Explorer.new(explorer_data)
+    end
+
+    def match_by_id(match_id)
+      return unless match_id
+
+      match_data = request(Match::ENDPOINT, match_id)
+      return {} unless match_data.success?
+      Match.new(match_data)
+    end
+
+    def team_by_id(team_id)
+      return {} unless team_id
+
+      team_data = request(Team.show_endpoint(team_id))
+      return {} unless team_data
+      Team.new(team_data)
+    end
+
+    def player_by_id(player_id)
+      return {} unless player_id
+
+      player_data = request(Player.show_endpoint(player_id))
+      return {} unless player_data
+      Player.new(player_data)
+    end
+
+    def players_by_team_id(team_id)
+      return {} unless team_id
+
+      players_data = request(Team.players_endpoint(team_id))
+      return {} unless players_data
+      Teams::Player.instantiate(players_data)
+    end
+
+    def matches_by_team_id(team_id)
+      return {} unless team_id
+
+      matches_data = request(Team.matches_endpoint(team_id))
+      return {} unless matches_data
+      Teams::Match.instantiate(matches_data)
     end
 
     private

@@ -1,5 +1,7 @@
 require 'open_dota_api/entity'
 require 'open_dota_api/matches/player'
+require 'open_dota_api/matches/objective'
+require 'open_dota_api/matches/draft_timing'
 
 module OpenDotaApi
   class Match < Entity
@@ -25,16 +27,24 @@ module OpenDotaApi
       data['series_id']
     end
 
+    def engine
+      data['engine']
+    end
+
+    def game_mode
+      data['game_mode']
+    end
+
     def series_type
       data['series_type']
     end
 
     def radiant_team_id
-      data.dig('radiant_team', 'team_id')
+      data['radiant_team_id']
     end
 
     def dire_team_id
-      data.dig('dire_team', 'team_id')
+      data['dire_team_id']
     end
 
     def match_seq_num
@@ -61,12 +71,20 @@ module OpenDotaApi
       data['replay_salt']
     end
 
+    def version
+      data['version']
+    end
+
     def replay_url
       "http://replay#{cluster}.valve.net/570/#{match_id}_#{replay_salt}.dem.bz2"
     end
 
-    def players
-      Player.instantiate(data['players'])
+    def region
+      data['region']
+    end
+
+    def patch
+      data['patch']
     end
 
     def radiant_score
@@ -75,6 +93,18 @@ module OpenDotaApi
 
     def dire_score
       data['dire_score']
+    end
+
+    def players
+      data['players'] ? Player.instantiate(data['players']) : []
+    end
+
+    def objectives
+      data['objectives'] ? Matches::Objective.instantiate(data['objectives']) : []
+    end
+
+    def draft_timings
+      data['draft_timings'] ? Matches::DraftTiming.instantiate(data['draft_timings']) : []
     end
 
     class Player < Matches::Player; end
