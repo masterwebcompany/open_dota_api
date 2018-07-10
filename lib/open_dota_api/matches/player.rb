@@ -182,6 +182,22 @@ module OpenDotaApi
       def item_5
         data['item_5']
       end
+      def is_radiant
+        data['isRadiant']
+      end
+
+      def radiant_win
+        data['radiant_win']
+      end
+
+      def win
+        data['win']
+      end
+
+      def lose
+        data['lose']
+      end
+
 
     end
   end

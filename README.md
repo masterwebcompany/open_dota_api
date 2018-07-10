@@ -245,6 +245,10 @@ player.item_2                   # Integer, Item in the player's third slot
 player.item_3                   # Integer, Item in the player's fourth slot
 player.item_4                   # Integer, Item in the player's fifth slot
 player.item_5                   # Integer, Item in the player's sixth slot
+player.is_radiant               # Boolean, whether or not the player is on Radiant
+player.radiant_win              # Boolean, indicating whether Radiant won the match
+player.win                      # Binary integer, representing whether or not the player won
+player.lose                     # Binary integer, representing whether or not the player lost
 
 ```
 
