@@ -201,6 +201,18 @@ module OpenDotaApi
       def actions_per_min
         data['actions_per_min']
       end
+
+      def purchase
+        data['purchase']
+      end
+
+      def purchase_log
+        data['purchase_log']
+      end
+
+      def purchase_time
+        data['purchase_time']
+      end
     end
   end
 end
