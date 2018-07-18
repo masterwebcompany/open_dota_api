@@ -198,7 +198,9 @@ module OpenDotaApi
         data['lose']
       end
 
-
+      def actions_per_min
+        data['actions_per_min']
+      end
     end
   end
 end

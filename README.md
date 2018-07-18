@@ -236,6 +236,7 @@ player.last_hits                # Integer, Number of last hits
 player.firstblood_claimed       # Integer, first blood claimed
 player.hero_damage              # Integer, Hero Damage Dealt
 player.teamfight_participation  # Number, teamfight participation
+player.actions_per_min          # Integer, Actions per minute
 player.backpack_0               # Integer, Item in backpack slot 0
 player.backpack_1               # Integer, Item in backpack slot 1
 player.backpack_2               # Integer, Item in backpack slot 2
