@@ -218,8 +218,8 @@ module OpenDotaApi
         data['killed']
       end
 
-      def killed_log
-        data['killed_log']
+      def kills_log
+        data['kills_log']
       end
     end
   end
