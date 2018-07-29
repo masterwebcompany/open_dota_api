@@ -213,6 +213,14 @@ module OpenDotaApi
       def purchase_time
         data['purchase_time']
       end
+
+      def killed
+        data['killed']
+      end
+
+      def killed_log
+        data['killed_log']
+      end
     end
   end
 end
