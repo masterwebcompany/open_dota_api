@@ -221,6 +221,14 @@ module OpenDotaApi
       def kills_log
         data['kills_log']
       end
+
+      def ability_upgrades
+        data['ability_upgrades_arr']
+      end
+
+      def xp_timings
+        data['xp_t']
+      end
     end
   end
 end

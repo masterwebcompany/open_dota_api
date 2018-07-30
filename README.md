@@ -242,6 +242,8 @@ player.purchase_log             # Array, Object containing information on when i
 player.purchase_time            # Hash, Object with information on when the player last purchased an item
 player.killed                   # Hash, containing information about what units the player killed
 player.kills_log                # Array, containing information on which hero the player killed at what time
+player.ability_upgrades         # Array, describes how abilities were upgraded
+player.xp_timings               # Array, Experience at each minute of the game
 player.backpack_0               # Integer, Item in backpack slot 0
 player.backpack_1               # Integer, Item in backpack slot 1
 player.backpack_2               # Integer, Item in backpack slot 2
