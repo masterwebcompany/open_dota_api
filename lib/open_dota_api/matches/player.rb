@@ -103,6 +103,10 @@ module OpenDotaApi
         data['hero_damage']
       end
 
+      def tower_damage
+        data['tower_damage']
+      end
+
       def teamfight_participation
         data['teamfight_participation']
       end
