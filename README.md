@@ -235,6 +235,7 @@ player.hero_healing             # Integer, Hero Healing Done
 player.last_hits                # Integer, Number of last hits
 player.firstblood_claimed       # Integer, first blood claimed
 player.hero_damage              # Integer, Hero Damage Dealt
+player.tower_damage             # Integer, Total tower damage done by the player
 player.teamfight_participation  # Number, teamfight participation
 player.actions_per_min          # Integer, Actions per minute
 player.purchase                 # Hash, Object containing information on the items the player purchased
