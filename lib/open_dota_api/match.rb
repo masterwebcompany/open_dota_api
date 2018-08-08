@@ -43,8 +43,17 @@ module OpenDotaApi
       data['radiant_team_id']
     end
 
+    def radiant_team
+      data['radiant_team']
+    end
+
+
     def dire_team_id
       data['dire_team_id']
+    end
+
+    def dire_team
+      data['dire_team']
     end
 
     def match_seq_num

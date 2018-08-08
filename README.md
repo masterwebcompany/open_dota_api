@@ -187,7 +187,9 @@ match.duration                # Integer, duration of the game in seconds
 match.series_id               # Integer, series ID
 match.series_type             # Integer, series type
 match.radiant_team_id         # Integer, the Radiant's team_id
+match.radiant_team            # Hash, the Radiant team
 match.dire_team_id            # Integer, the Dire's team_id
+match.dire_team               # Integer, the Dire team
 match.match_seq_num           # Integer, match seq num
 match.league_id               # Integer, league ID
 match.first_blood_time        # Integer, time in seconds at which first blood occurred
