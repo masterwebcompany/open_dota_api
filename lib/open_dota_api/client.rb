@@ -8,10 +8,12 @@ require 'open_dota_api/explorer'
 require 'open_dota_api/teams/player'
 require 'open_dota_api/teams/match'
 require 'open_dota_api/player'
+require 'json'
 
 module OpenDotaApi
   class Client
     INTERFACE = 'api'.freeze
+
 
     def leagues
       leagues_data = request(League::ENDPOINT)
@@ -47,7 +49,18 @@ module OpenDotaApi
       return unless match_id
 
       match_data = request(Match::ENDPOINT, match_id)
-      return {} unless match_data.success?
+      return Match.new(match_data) if match_data.success? && match_data['chat'] && match_data['teamfights'] && match_data['radiant_gold_adv'] && match_data['radiant_xp_adv']
+      response = JSON.parse(post_request(Match::REQUEST_ENDPOINT, match_id).body)
+      job_id = response.dig('job', 'jobId')
+      return unless job_id
+      8.times do
+        job = request(Match::REQUEST_ENDPOINT, job_id).body
+        puts job
+        break if job == Match::JOB_NULL_RESPONSE
+        sleep 10
+      end
+      match_data = request(Match::ENDPOINT, match_id)
+      return Match.new({}) unless match_data.success?
       Match.new(match_data)
     end
 
@@ -93,6 +106,12 @@ module OpenDotaApi
       argument = argument ? argument.to_s.concat('/') : nil
       pathname = "/#{INTERFACE}/#{method}/#{argument}"
       connection.get(pathname, query: query_params)
+    end
+
+    def post_request(method, argument = nil, query_params: nil)
+      argument = argument ? argument.to_s.concat('/') : nil
+      pathname = "/#{INTERFACE}/#{method}/#{argument}"
+      connection.post(pathname, query: query_params)
     end
   end
 end

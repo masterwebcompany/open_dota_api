@@ -6,6 +6,8 @@ require 'open_dota_api/matches/draft_timing'
 module OpenDotaApi
   class Match < Entity
     ENDPOINT = 'matches'.freeze
+    REQUEST_ENDPOINT = 'request'.freeze
+    JOB_NULL_RESPONSE = 'null'.freeze
 
     def self.instantiate(_ = nil)
       raise NotImplementedError
@@ -122,6 +124,10 @@ module OpenDotaApi
 
     def draft_timings
       data['draft_timings'] ? Matches::DraftTiming.instantiate(data['draft_timings']) : []
+    end
+
+    def self.request_endpoint(id)
+      "/#{REQUEST_ENDPOINT}/#{id}"
     end
 
     class Player < Matches::Player; end
