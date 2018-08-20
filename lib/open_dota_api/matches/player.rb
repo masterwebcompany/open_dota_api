@@ -233,6 +233,10 @@ module OpenDotaApi
       def xp_timings
         data['xp_t']
       end
+
+      def lane_positions
+        data['lane_pos'] || {}
+      end
     end
   end
 end
