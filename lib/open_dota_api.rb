@@ -15,12 +15,19 @@ module OpenDotaApi
  end
 
  class Configuration
-   attr_accessor :api_key
+   attr_accessor :api_key, :base_uri
 
    def initialize
      @api_key = ''
+     @base_uri = 'api.opendota.com'
+   end
+
+   def base_uri=(uri)
+     @base_uri = uri
+     OpenDotaApi::Connection.base_uri(uri)
    end
  end
+
   def self.client
     @client ||= Client.new
   end
