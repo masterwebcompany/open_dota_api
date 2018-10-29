@@ -13,7 +13,7 @@ require 'json'
 module OpenDotaApi
   class Client
     INTERFACE = 'api'.freeze
-
+    NULL_RESPONSE = 'null'.freeze
 
     def leagues
       leagues_data = request(League::ENDPOINT)
@@ -50,13 +50,14 @@ module OpenDotaApi
 
       match_data = request(Match::ENDPOINT, match_id)
       return Match.new(match_data) if match_data.success? && match_data['chat'] && match_data['teamfights'] && match_data['radiant_gold_adv'] && match_data['radiant_xp_adv']
-      response = JSON.parse(post_request(Match::REQUEST_ENDPOINT, match_id).body)
+      response_body = post_request(Match::REQUEST_ENDPOINT, match_id).body
+      response = response_body == NULL_RESPONSE ? {} : JSON.parse(response_body) # opendota fix
       job_id = response.dig('job', 'jobId')
-      return unless job_id
+      return Match.new({}) unless job_id
       8.times do
         job = request(Match::REQUEST_ENDPOINT, job_id).body
         puts job
-        break if job == Match::JOB_NULL_RESPONSE
+        break if job == NULL_RESPONSE
         sleep 10
       end
       match_data = request(Match::ENDPOINT, match_id)

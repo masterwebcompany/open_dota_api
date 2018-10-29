@@ -7,7 +7,6 @@ module OpenDotaApi
   class Match < Entity
     ENDPOINT = 'matches'.freeze
     REQUEST_ENDPOINT = 'request'.freeze
-    JOB_NULL_RESPONSE = 'null'.freeze
 
     def self.instantiate(_ = nil)
       raise NotImplementedError
