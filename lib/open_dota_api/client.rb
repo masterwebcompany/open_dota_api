@@ -50,19 +50,19 @@ module OpenDotaApi
 
       match_data = request(Match::ENDPOINT, match_id)
       return Match.new(match_data) if match_data.success? && match_data['chat'] && match_data['teamfights'] && match_data['radiant_gold_adv'] && match_data['radiant_xp_adv']
-      response_body = post_request(Match::REQUEST_ENDPOINT, match_id).body
-      response = response_body == NULL_RESPONSE ? {} : JSON.parse(response_body) # opendota fix
-      job_id = response.dig('job', 'jobId')
-      return Match.new({}) unless job_id
-      8.times do
-        job = request(Match::REQUEST_ENDPOINT, job_id).body
-        puts job
-        break if job == NULL_RESPONSE
-        sleep 10
-      end
-      match_data = request(Match::ENDPOINT, match_id)
-      return Match.new({}) unless match_data.success?
-      Match.new(match_data)
+      # response_body = post_request(Match::REQUEST_ENDPOINT, match_id).body
+      # response = response_body == NULL_RESPONSE ? {} : JSON.parse(response_body) # opendota fix
+      # job_id = response.dig('job', 'jobId')
+      # return Match.new({}) unless job_id
+      # 8.times do
+      #   job = request(Match::REQUEST_ENDPOINT, job_id).body
+      #   puts job
+      #   break if job == NULL_RESPONSE
+      #   sleep 10
+      # end
+      # match_data = request(Match::ENDPOINT, match_id)
+      return Match.new({}) # unless match_data.success?
+      # Match.new(match_data)
     end
 
     def team_by_id(team_id)
