@@ -49,7 +49,7 @@ module OpenDotaApi
       return unless match_id
 
       match_data = request(Match::ENDPOINT, match_id)
-      return Match.new(match_data) if match_data.success? && match_data['chat'] && match_data['teamfights'] && match_data['radiant_gold_adv'] && match_data['radiant_xp_adv']
+      return Match.new(match_data) if match_data.success?
       # response_body = post_request(Match::REQUEST_ENDPOINT, match_id).body
       # response = response_body == NULL_RESPONSE ? {} : JSON.parse(response_body) # opendota fix
       # job_id = response.dig('job', 'jobId')
