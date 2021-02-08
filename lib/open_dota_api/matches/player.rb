@@ -237,6 +237,10 @@ module OpenDotaApi
       def lane_positions
         data['lane_pos'] || {}
       end
+
+      def permanent_buffs
+        data['permanent_buffs']
+      end
     end
   end
 end
