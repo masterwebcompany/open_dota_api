@@ -2,14 +2,41 @@ require 'open_dota_api/entity'
 require 'open_dota_api/matches/player'
 require 'open_dota_api/matches/objective'
 require 'open_dota_api/matches/draft_timing'
+require 'httparty'
 
 module OpenDotaApi
   class Match < Entity
     ENDPOINT = 'matches'.freeze
     REQUEST_ENDPOINT = 'request'.freeze
+    LOBBY_TYPES_URL = 'https://raw.githubusercontent.com/odota/dotaconstants/master/build/lobby_type.json'
+
+    LOBBY_TYPES_NAMES = {
+      normal:         'lobby_type_normal',
+      practice:       'lobby_type_practice',
+      tournament:     'lobby_type_tournament',
+      tutorial:       'lobby_type_tutorial',
+      coop_bots:      'lobby_type_coop_bots',
+      ranked_team_mm: 'lobby_type_ranked_team_mm',
+      ranked_solo_mm: 'lobby_type_ranked_solo_mm',
+      ranked:         'lobby_type_ranked',
+      '1v1_mid':      'lobby_type_1v1_mid',
+      battle_cup:     'lobby_type_battle_cup',
+    }
 
     def self.instantiate(_ = nil)
       raise NotImplementedError
+    end
+
+    # @param [Symbol] lobby_type_name
+    def self.lobby_type_id(lobby_type_name)
+      lobby_types_response = HTTParty.get(LOBBY_TYPES_URL)
+      lobby_types_ids = JSON.parse(lobby_types_response)
+
+      type = lobby_types_ids.find do |_id, obj|
+        obj['name'] == LOBBY_TYPES_NAMES[lobby_type_name]
+      end
+
+      type&.first
     end
 
     def match_id
