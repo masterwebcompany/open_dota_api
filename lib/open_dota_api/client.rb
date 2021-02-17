@@ -7,6 +7,8 @@ require 'open_dota_api/pro_player'
 require 'open_dota_api/explorer'
 require 'open_dota_api/teams/player'
 require 'open_dota_api/teams/match'
+require 'open_dota_api/teams/hero'
+require 'open_dota_api/players/hero'
 require 'open_dota_api/player'
 require 'json'
 
@@ -95,6 +97,29 @@ module OpenDotaApi
       matches_data = request(Team.matches_endpoint(team_id))
       return {} unless matches_data
       Teams::Match.instantiate(matches_data)
+    end
+
+    def heroes_by_team_id(team_id)
+      return {} unless team_id
+
+      team_heroes_data = request(Team.heroes_endpoint(team_id))
+      return {} unless team_heroes_data
+
+      Teams::Hero.instantiate(team_heroes_data)
+    end
+
+    def heroes_by_player_id(player_id, lobby_type: nil)
+      return {} unless player_id
+      query = lobby_type && { lobby_type: Match.lobby_type_id(lobby_type) }
+
+      player_heroes_data = request(
+        Player.heroes_endpoint(player_id),
+        query_params: query
+      )
+
+      return {} unless player_heroes_data
+
+      Players::Hero.instantiate(player_heroes_data)
     end
 
     private
