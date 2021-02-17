@@ -28,6 +28,10 @@ module OpenDotaApi
       "#{ENDPOINT}/#{team_id}"
     end
 
+    def self.heroes_endpoint(team_id)
+      [ENDPOINT, team_id, Hero::ENDPOINT].join('/')
+    end
+
     private
       def client
         @client ||= Client.new
